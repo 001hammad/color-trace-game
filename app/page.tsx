@@ -13,9 +13,9 @@ export default function ColorMatchingGame() {
   // Generate a new color and options
   const generateColors = () => {
     const correctColor = colors[Math.floor(Math.random() * colors.length)];
-    const shuffledColors = [...colors].sort(() => Math.random() - 0.5).slice(0, 3);
+    const shuffledColors = [...colors].sort(() => Math.random() - 0.5).slice(0, 4);
     if (!shuffledColors.includes(correctColor)) {
-      shuffledColors[Math.floor(Math.random() * 3)] = correctColor;
+      shuffledColors[Math.floor(Math.random() * 4)] = correctColor;
     }
     setTargetColor(correctColor);
     setOptions(shuffledColors);
@@ -25,10 +25,10 @@ export default function ColorMatchingGame() {
 
   const handleSelect = (color: string) => {
     if (color === targetColor) {
-      setMessage('Congratulations Correct!');
+      setMessage('Congratulations! Correct!');
       setShowStickers(true);
     } else {
-      setMessage('Loser! Try Again.');
+      setMessage('Oops! Try Again.');
     }
   };
 
@@ -37,39 +37,51 @@ export default function ColorMatchingGame() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-red-300">
-      <h2 className="text-2xl font-bold text-center text-blue-600 bg-blue-100 py-4 px-4  rounded-lg shadow-lg sm:mb-9 ">Play the game and memorize the color codes as you go!</h2>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 p-4">
+      <h2 className="text-3xl font-semibold text-center text-white bg-opacity-70 py-4 px-6 rounded-lg shadow-xl mb-8 max-w-lg w-full">
+        Play and match the color code!
+      </h2>
 
-      <div className='bg-red-100 shadow-lg shadow-black border-yellow-300 border-s-8 border-e-8 p-10'>
-        <h2 className='text-center font-mono text-xl opacity-30'>This Code Color Game Developed By Hammad Hafeez</h2>
-      <h1 className="text-4xl font-bold mb-6 underline">Color Matching Game for Programmers</h1>
-      <div className="text-2xl mb-4">Select the color for code: <span className="font-mono text-white bg-slate-500 rounded-2xl p-2">{targetColor}</span></div>
-      <div className="grid grid-cols-3 gap-6 mb-6">
-        {options.map((color) => (
-          <button
-            key={color}
-            className='h-24 w-24 rounded-xl border-black border'
-            style={{ backgroundColor: color }}
-            onClick={() => handleSelect(color)}
-          />
-        ))}
-      </div>
-      {message && (
-        <div className="text-2xl font-bold mb-6 bg-yellow-500 rounded-full p-3">{message}</div>
-      )}
-      {showStickers && (
-        <div className="flex flex-wrap justify-center">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="animate-bounce p-2">🎉</div>
+      <div className="bg-white shadow-2xl rounded-3xl border-4 border-indigo-600 p-8 w-full max-w-xl">
+        <h2 className="text-center font-mono text-lg opacity-70 mb-4 text-gray-600">A Color Matching Game Created by Hammad Hafeez</h2>
+        <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-center text-indigo-700 underline">Color Matching Game for Programmers</h1>
+        
+        <div className="text-2xl sm:text-3xl mb-6 text-center">
+          Select the color for code: 
+          <span className="font-mono text-white bg-slate-500 rounded-2xl p-3 ml-2">{targetColor}</span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 mb-6">
+          {options.map((color) => (
+            <button
+              key={color}
+              className="h-24 sm:h-28 w-24 sm:w-28 rounded-2xl border-4 border-gray-800 shadow-lg transform transition-transform hover:scale-110"
+              style={{ backgroundColor: color }}
+              onClick={() => handleSelect(color)}
+            />
           ))}
         </div>
-      )}
-      <button
-        onClick={generateColors}
-        className="mt-8 bg-yellow-500 hover:bg-yellow-300 text-white sm:ml-64 px-4 py-2 duration-300 rounded"
-      >
-        Play Again
-      </button>
+
+        {message && (
+          <div className="text-2xl font-semibold mb-6 text-center py-3 px-6 bg-yellow-500 rounded-full shadow-xl">
+            {message}
+          </div>
+        )}
+
+        {showStickers && (
+          <div className="flex flex-wrap justify-center">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="animate-bounce p-2 text-3xl">🎉</div>
+            ))}
+          </div>
+        )}
+
+        <button
+          onClick={generateColors}
+          className="mt-8 bg-yellow-500 hover:bg-yellow-400 text-white px-6 py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg w-full sm:w-auto"
+        >
+          Play Again
+        </button>
       </div>
     </div>
   );
